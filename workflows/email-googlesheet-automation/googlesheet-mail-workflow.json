@@ -1,0 +1,266 @@
+{
+  "name": "googlesheet-mail-workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d7ea3c61-ea99-423e-b38a-99561cb5133d",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1flL0n4RZQG4wHsOxQY5zPEWovctq3ei4bA9kn_5Tgok",
+          "mode": "list",
+          "cachedResultName": "dummy_contact_list ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1flL0n4RZQG4wHsOxQY5zPEWovctq3ei4bA9kn_5Tgok/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1flL0n4RZQG4wHsOxQY5zPEWovctq3ei4bA9kn_5Tgok/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "49926135-f950-4a49-9e86-0d10a7da5cbb",
+      "name": "Get row(s) in sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        128
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pSKyZ4fKyeK38cup",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "=Automate Your Work. Save Time. Get More Done",
+        "message": "=Hi {{ $json['First Name'] }},  Tired of spending hours on repetitive tasks?  We can help you automate your everyday workflows — from sending emails and managing leads to updating spreadsheets, generating reports, handling notifications, and much more.  If you have a task that you do repeatedly, there’s a good chance we can automate it for you.  🚀 What can we automate?  Email & marketing workflows Lead collection and follow-ups Google Sheets & data management Reports and notifications Customer support workflows Social media processes Business & administrative tasks Custom AI-powered automations  Tell us what you want to automate, and we’ll help turn it into a streamlined workflow.  Save time. Reduce manual work. Focus on what matters.  Best regards, [Your Automation Team] ",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a2993ad9-43ca-48ad-bb3e-2d6c1fcababa",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        224
+      ],
+      "webhookId": "861a75b6-806c-49d3-a875-13389107178f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JnFHOSnQb0casUDL",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1flL0n4RZQG4wHsOxQY5zPEWovctq3ei4bA9kn_5Tgok",
+          "mode": "list",
+          "cachedResultName": "dummy_contact_list ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1flL0n4RZQG4wHsOxQY5zPEWovctq3ei4bA9kn_5Tgok/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1flL0n4RZQG4wHsOxQY5zPEWovctq3ei4bA9kn_5Tgok/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Loop Over Items').item.json.row_number }}",
+            "Email Sent": "Successful "
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Surname",
+              "displayName": "Surname",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Country",
+              "displayName": "Country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Sent",
+              "displayName": "Email Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "5eee1145-5831-492c-abc0-70cd27fb9d26",
+      "name": "Update row in sheet1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        688,
+        224
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pSKyZ4fKyeK38cup",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "67b3697c-4660-46f1-8511-772fd3a55fc4",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        256,
+        128
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2a8a1c0e-9322-4ad1-86b4-b9aa4ef0d8f4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "62b8cfae5f6f4cab0c2a3b5bee798e2496624477906a10c1237f58f9d53e5ee1"
+  },
+  "nodeGroups": [],
+  "id": "Qi1ZcW6jfBJq1YuK",
+  "tags": []
+}
